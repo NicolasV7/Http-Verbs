@@ -8,7 +8,7 @@ import org.bson.json.JsonWriterSettings;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Connection {
+public class TestConnection {
     public static void main(String[] args) {
         String connectionString = System.getProperty("mongodb.uri");
         try (MongoClient mongoClient = MongoClients.create(connectionString)) {
