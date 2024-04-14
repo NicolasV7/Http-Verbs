@@ -1,10 +1,10 @@
-package com.villota.http;
+package com.villota.http_verbs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HttpApplicationTests {
+class HttpVerbsApplicationTests {
 
 	@Test
 	void contextLoads() {
