@@ -1,73 +1,38 @@
 package com.villota.http_verbs.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.villota.http_verbs.model.Task;
+import com.villota.http_verbs.repository.TaskRepository;
 
 @Service
 public class TaskService {
 
-  private List<Task> tasks;
+    private final TaskRepository taskRepository;
 
-  boolean started = false;
-
-  public void set_tasks(){
-    if (this.started==false) {
-      this.tasks = new ArrayList<Task>();
-      this.started = true;
+    @Autowired
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
-  }
 
-  public String get_all_tasks() {
-    set_tasks();
-    return "----->\n" + tasks.toString() + "\n<-----";
-  }
-
-  public String post_task(Task task) {
-    set_tasks();
-    tasks.add(task);
-    return "----->\n" + tasks.toString() + "\n<-----";
-  }
-
-  public String get_task(ObjectId _id) {
-    set_tasks();
-    for (Task t : tasks) {
-      if (t.get_id().equals(_id)) {
-        return "----->\n" + t.toString() + "\n<-----";
-      }
+    public List<Task> get_all_tasks() {
+        return taskRepository.findAll();
     }
-    return "----->\n" + "Task not found" + "\n<-----";
-  }
 
-  public String delete_task(ObjectId _id) {
-    set_tasks();
-    for (Task t : tasks) {
-      if (t.get_id().equals(_id)) {
-        tasks.remove(t);
-        return "----->\n" + tasks.toString() + "\n<-----";
-      }
+    public Task post_task(Task task) {
+        return taskRepository.save(task);
     }
-    return "----->\n" + "Task not found" + "\n<-----";
-  }
 
-  public String options_task() {
-    return "----->\n" + "OPTIONS" + "\n<-----";
-  }
-
-  public String patch_task(ObjectId _id, Task task) {
-    set_tasks();
-    for (Task t : tasks) {
-      if (t.get_id().equals(_id)) {
-        t.set_title(task.get_title());
-        t.set_description(task.get_description());
-        t.set_done(task.is_done());
-        return "----->\n" + tasks.toString() + "\n<-----";
-      }
+    public void delete_task(ObjectId _id) {
+        taskRepository.deleteById(_id);
     }
-    return "----->\n" + "Task not found" + "\n<-----";
-  }
+
+    public Task patch_task(ObjectId _id, Task task) {
+        task.setId(_id);
+        return taskRepository.save(task);
+    }
 }

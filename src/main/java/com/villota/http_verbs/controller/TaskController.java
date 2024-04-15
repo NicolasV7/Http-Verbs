@@ -1,5 +1,7 @@
 package com.villota.http_verbs.controller;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,36 +21,26 @@ public class TaskController {
   private TaskService taskService;
   
   @GetMapping("/getAll")
-  public String get_all_tasks() {
-    return taskService.get_all_tasks();
+  public ResponseEntity<List<Task>> get_all_tasks() {
+    List<Task> tasks = taskService.get_all_tasks();
+    return new ResponseEntity<>(tasks, HttpStatus.OK);
   }
 
   @PostMapping("/create")
-  public String post_task(@RequestBody Task task) {
-    return taskService.post_task(task);
+  public ResponseEntity<Task> post_task(@RequestBody Task task) {
+    Task createdTask = taskService.post_task(task);
+    return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
   }
 
   @DeleteMapping("/delete/{_id}")
-  public String delete_task(@PathVariable("_id") ObjectId _id) {
-    return taskService.delete_task(_id);
+  public ResponseEntity<Void> delete_task(@PathVariable("_id") ObjectId _id) {
+    taskService.delete_task(_id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @PatchMapping("/update/{_id}")
-  public String patch_task(@PathVariable("_id") ObjectId _id, @RequestBody Task task) {
-    return taskService.patch_task(_id, task);
+  public ResponseEntity<Task> patch_task(@PathVariable("_id") ObjectId _id, @RequestBody Task task) {
+    Task updatedTask = taskService.patch_task(_id, task);
+    return new ResponseEntity<>(updatedTask, HttpStatus.OK);
   }
-
-  @RequestMapping(value = "/getHead", method = RequestMethod.HEAD)
-  public ResponseEntity<String> handle_head_tasks() {
-      HttpHeaders headers = new HttpHeaders();
-      headers.setContentType(MediaType.APPLICATION_JSON);
-      headers.add("Hola", "Chao");
-      return new ResponseEntity<>(headers, HttpStatus.OK);
-  }
-
-  @RequestMapping(value = "/options", method = RequestMethod.OPTIONS)
-  public String handle_options_tasks() {
-    return taskService.options_task();
-  }
-
 }

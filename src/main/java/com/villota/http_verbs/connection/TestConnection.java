@@ -1,4 +1,4 @@
-package com.villota.http_verbs;
+package com.villota.http_verbs.connection;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
