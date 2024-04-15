@@ -13,6 +13,16 @@ public class Task {
   @BsonProperty(value = "done")
   private boolean done;
 
+  public Task() {
+  }
+
+  public Task(ObjectId _id, String title, String description, boolean done) {
+    this._id = _id;
+    this.title = title;
+    this.description = description;
+    this.done = done;
+  }
+
   public ObjectId get_id() {
     return _id;
   }
@@ -42,6 +52,11 @@ public class Task {
 
   public boolean is_done() {
     return done;
+  }
+
+  public Task set_done(boolean done) {
+    this.done = done;
+    return this;
   }
 
   @Override

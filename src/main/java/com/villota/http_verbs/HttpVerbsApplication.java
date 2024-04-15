@@ -8,8 +8,6 @@ public class HttpVerbsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HttpVerbsApplication.class, args);
-
-		Properties.main(args);
 	}
 
 }
