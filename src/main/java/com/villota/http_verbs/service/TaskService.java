@@ -15,17 +15,10 @@ public class TaskService {
 
   boolean started = false;
 
-  ObjectId _id = new ObjectId();
-  String title = "Task 1";
-  String description = "Description 1";
-  boolean done = false;
-
   public void set_tasks(){
     if (this.started==false) {
       this.tasks = new ArrayList<Task>();
-      tasks.add(new Task(_id, title, description, done));
       this.started = true;
-      
     }
   }
 
@@ -38,19 +31,6 @@ public class TaskService {
     set_tasks();
     tasks.add(task);
     return "----->\n" + tasks.toString() + "\n<-----";
-  }
-
-  public String update_task(Task task) {
-    set_tasks();
-    for (Task t : tasks) {
-      if (t.get_id().equals(task.get_id())) {
-        t.set_title(task.get_title());
-        t.set_description(task.get_description());
-        t.set_done(task.is_done());
-        return "----->\n" + tasks.toString() + "\n<-----";
-      }
-    }
-    return "----->\n" + "Task not found" + "\n<-----";
   }
 
   public String get_task(ObjectId _id) {

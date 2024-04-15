@@ -18,7 +18,7 @@ public class TaskController {
   @Autowired
   private TaskService taskService;
   
-  @GetMapping("/all")
+  @GetMapping("/getAll")
   public String get_all_tasks() {
     return taskService.get_all_tasks();
   }
@@ -28,26 +28,22 @@ public class TaskController {
     return taskService.post_task(task);
   }
 
-  @PutMapping("/update")
-  public String update_task(@RequestBody Task task) {
-    return taskService.update_task(task);
-  }
-
   @DeleteMapping("/delete/{_id}")
-  public String delete_task(@PathVariable("id") ObjectId _id) {
+  public String delete_task(@PathVariable("_id") ObjectId _id) {
     return taskService.delete_task(_id);
   }
 
   @PatchMapping("/update/{_id}")
-  public String patch_task(@PathVariable("id") ObjectId _id, @RequestBody Task task) {
+  public String patch_task(@PathVariable("_id") ObjectId _id, @RequestBody Task task) {
     return taskService.patch_task(_id, task);
   }
 
   @RequestMapping(value = "/getAll", method = RequestMethod.HEAD)
-  public ResponseEntity<?> handle_head_tasks() {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    return new ResponseEntity<>(headers, HttpStatus.OK);
+  public ResponseEntity<String> handle_head_tasks() {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.APPLICATION_JSON);
+      headers.add("Hola", "Chao");
+      return new ResponseEntity<>(headers, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.OPTIONS)
