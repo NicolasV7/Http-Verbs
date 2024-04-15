@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.villota.http_verbs.model.Task;
 import com.villota.http_verbs.service.TaskService;
@@ -17,6 +22,10 @@ import com.villota.http_verbs.service.TaskService;
 public class TaskController {
   @Autowired
   private TaskService taskService;
+
+  public TaskController(TaskService taskService) {
+    this.taskService = taskService;
+  }
   
   @GetMapping("/getAll")
   public ResponseEntity<List<Task>> get_all_tasks() {
@@ -40,5 +49,18 @@ public class TaskController {
   public ResponseEntity<Task> patch_task(@PathVariable("_id") ObjectId _id, @RequestBody Task task) {
     Task updatedTask = taskService.patch_task(_id, task);
     return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/getHead", method = RequestMethod.HEAD)
+  public ResponseEntity<String> handle_head_tasks() {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.APPLICATION_JSON);
+      headers.add("Holi :3", "Ciao :c");
+      return new ResponseEntity<>(headers, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/getOptions", method = RequestMethod.OPTIONS)
+  public String handle_options_tasks() {
+      return taskService.options_task();
   }
 }

@@ -35,4 +35,8 @@ public class TaskService {
         task.set_id(_id);
         return taskRepository.save(task);
     }
+
+    public String options_task() {
+        return "Response for OPTIONS request";
+    }
 }
