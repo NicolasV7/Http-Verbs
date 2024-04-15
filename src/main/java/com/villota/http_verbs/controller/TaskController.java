@@ -33,7 +33,7 @@ public class TaskController {
   @DeleteMapping("/delete/{_id}")
   public ResponseEntity<Void> delete_task(@PathVariable("_id") ObjectId _id) {
     taskService.delete_task(_id);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @PatchMapping("/update/{_id}")
