@@ -13,7 +13,7 @@ import com.villota.http_verbs.model.Task;
 import com.villota.http_verbs.service.TaskService;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
   @Autowired
   private TaskService taskService;
