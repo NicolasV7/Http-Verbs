@@ -13,7 +13,7 @@ import com.villota.http_verbs.model.Task;
 import com.villota.http_verbs.service.TaskService;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/v1/api/task")
 public class TaskController {
   @Autowired
   private TaskService taskService;
@@ -23,7 +23,7 @@ public class TaskController {
     return taskService.get_all_tasks();
   }
 
-  @PostMapping("/add")
+  @PostMapping("/create")
   public String post_task(@RequestBody Task task) {
     return taskService.post_task(task);
   }
@@ -38,7 +38,7 @@ public class TaskController {
     return taskService.patch_task(_id, task);
   }
 
-  @RequestMapping(value = "/getAll", method = RequestMethod.HEAD)
+  @RequestMapping(value = "/getHead", method = RequestMethod.HEAD)
   public ResponseEntity<String> handle_head_tasks() {
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);
@@ -46,7 +46,7 @@ public class TaskController {
       return new ResponseEntity<>(headers, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/update", method = RequestMethod.OPTIONS)
+  @RequestMapping(value = "/options", method = RequestMethod.OPTIONS)
   public String handle_options_tasks() {
     return taskService.options_task();
   }
