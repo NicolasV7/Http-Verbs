@@ -32,7 +32,7 @@ public class TaskService {
     }
 
     public Task patch_task(ObjectId _id, Task task) {
-        task.setId(_id);
+        task.set_id(_id);
         return taskRepository.save(task);
     }
 }
